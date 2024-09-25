@@ -22,26 +22,38 @@ body {
 
 .main-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 20px;
   height: 100vh;
+  color: white;
 }
 
-.title {
-  color: #FFFFFF;
-  margin-bottom: 20px;
-  font-size: 2rem;
+.header {
   text-align: center;
+  margin-bottom: 40px;
 }
 
-.chessboard {
-  margin: 20px;
+.header-title {
+  font-size: 3rem;
+  margin: 0;
+  color: #f0f0f0;
+}
+
+.header-description {
+  font-size: 1.2rem;
+  color: #cccccc;
+}
+
+.chessboard-container {
+  margin-bottom: 40px;
 }
 
 .button-container {
   display: flex;
   gap: 10px;
-  margin-top: 20px;
+  justify-content: center;
 }
 
 .green-button {
@@ -61,4 +73,32 @@ body {
 
 .green-button:active {
   background-color: #1e7e34;
+}
+
+.future-features {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.future-features h2 {
+  font-size: 1.8rem;
+  color: #f0f0f0;
+}
+
+.future-features ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.future-features li {
+  font-size: 1.2rem;
+  color: #cccccc;
+  margin: 10px 0;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 40px;
+  color: #cccccc;
+  font-size: 0.9rem;
 }
