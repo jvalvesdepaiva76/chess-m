@@ -5,7 +5,7 @@ export default function Home() {
     <main className="main-container">
       <header className="header">
         <h1 className="header-title">Chess Master</h1>
-        <p className="header-description">Seu analisador de partidas de xadrez favorito</p>
+        <p className="header-description">Seu analisador de partidas de xadrez</p>
       </header>
 
       <ChessBoard />
