@@ -1,4 +1,7 @@
+"use client";
+
 import ChessBoard from './components/ChessBoard';
+import DailyPuzzle from './components/DailyPuzzle';
 
 export default function Home() {
   return (
@@ -10,12 +13,10 @@ export default function Home() {
 
       <ChessBoard />
 
-      <section className="future-features">
-        <ul>
-          <li>Modo Análise - Visualize análises avançadas de partidas</li>
-          <li>Histórico de Partidas - Salve e compartilhe suas partidas favoritas</li>
-          <li>Jogos Multiplayer - Jogue com amigos</li>
-        </ul>
+      {/* Seção do Desafio Diário */}
+      <section className="daily-puzzle-section">
+        <h2>Desafio Diário de Xadrez</h2>
+        <DailyPuzzle />
       </section>
 
       <footer className="footer">

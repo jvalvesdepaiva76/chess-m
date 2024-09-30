@@ -1,14 +1,15 @@
-/* Estilos Globais */
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: Arial, sans-serif;
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/chessboardjs/img/assets/chess.jpg') center/cover;
   height: 100vh;
-  background-repeat: no-repeat;
+  overflow-x: hidden; /* Remover a barra de rolagem horizontal */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/chessboardjs/img/assets/chess.png');
+  background-position: center;
   background-size: cover;
-  backdrop-filter: blur(5px);
+  background-attachment: fixed;
+  color: white;
 }
 
 .container {
@@ -25,29 +26,19 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
-  height: 100vh;
-  color: white;
+  min-height: 100vh;
+  max-width: 100%; /* Garantir que o container não ultrapasse a largura da tela */
 }
 
 .header {
   text-align: center;
   margin-bottom: 40px;
-}
-
-.header-title {
-  font-size: 3rem;
-  margin: 0;
-  color: #f0f0f0;
-}
-
-.header-description {
-  font-size: 1.2rem;
-  color: #cccccc;
+  max-width: 100%; /* Evitar quebra de layout no header */
 }
 
 .chessboard-container {
   margin-bottom: 40px;
+  max-width: 100%;
 }
 
 .button-container {
@@ -101,8 +92,12 @@ body {
 }
 
 .footer {
+  background-color: #ddc7a1c7; /* Bege claro */
+  color: #333; /* Cor do texto */
+  padding: 10px;
   text-align: center;
-  margin-top: 40px;
-  color: #cccccc;
   font-size: 0.9rem;
+  position: relative;
+  width: 100%;
+  max-width: 100%; /* Garantir que o footer não ultrapasse a largura da tela */
 }

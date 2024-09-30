@@ -9,6 +9,7 @@ export default function ChessBoard() {
   const [currentMove, setCurrentMove] = useState(0); // Controle do lance atual
   const [board, setBoard] = useState(null); // Tabuleiro de xadrez
   const [status, setStatus] = useState(""); // Status do jogo
+  const [gameMode, setGameMode] = useState("multiplayer"); // Alternar entre multiplayer e análise
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -30,10 +31,12 @@ export default function ChessBoard() {
         setChess(chessInstance); // Salva a instância no estado
 
         const boardInstance = window.Chessboard("board1", {
-          draggable: true, // Permitir arrastar peças
+          draggable: gameMode === "multiplayer", // Permitir arrastar peças apenas no modo multiplayer
           position: "start",
           pieceTheme: '/chessboardjs/img/chesspieces/wikipedia/{piece}.png',
           onDragStart: (source, piece, position, orientation) => {
+            if (gameMode === "analysis") return false; // Bloqueia arrastar no modo análise
+
             // Não permitir pegar peças após o fim do jogo
             if (chessInstance.isGameOver()) return false;
 
@@ -46,6 +49,13 @@ export default function ChessBoard() {
             }
           },
           onDrop: (source, target) => {
+            if (gameMode === "analysis") return "snapback"; // Bloqueia lances no modo análise
+
+            // Verifica se a origem e o destino são diferentes
+            if (source === target) {
+              return "snapback"; // Se forem iguais, desfaz o movimento
+            }
+
             // Tenta fazer o movimento
             const move = chessInstance.move({
               from: source,
@@ -67,9 +77,20 @@ export default function ChessBoard() {
 
         setBoard(boardInstance); // Salva o tabuleiro no estado
         updateStatus(); // Atualiza o status do jogo
+        
+        // Configuração dos botões de orientação
+        document.getElementById("flipOrientationBtn").addEventListener("click", () => {
+          boardInstance.flip(); // Inverte a orientação
+        });
       };
     }
-  }, []);
+  }, [gameMode]); // Recarregar o tabuleiro ao mudar o modo
+
+  // Função que verifica se o arquivo é .pgn usando RegExp
+  const isValidPGN = (filename) => {
+    const pgnRegex = /\.pgn$/i; // Expressão regular que verifica a extensão .pgn
+    return pgnRegex.test(filename);
+  };
 
   // Atualiza o status do jogo
   const updateStatus = () => {
@@ -105,11 +126,39 @@ export default function ChessBoard() {
     setStatus(status);
   };
 
+  // Carregar PGN no Modo Análise
+  const handlePGNUpload = (event) => {
+    const file = event.target.files[0];
+
+    // Validação de arquivo usando RegExp
+    if (!isValidPGN(file.name)) {
+      alert("Por favor, selecione um arquivo .pgn válido!"); // Alerta em caso de arquivo inválido
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const pgn = e.target.result;
+      const success = chess.load_pgn(pgn);
+
+      if (!success) {
+        alert("Erro ao carregar o PGN!"); // Alerta em caso de erro no carregamento do PGN
+        return;
+      }
+
+      const history = chess.history({ verbose: true });
+      setMoves(history);
+      setCurrentMove(0); // Começar do início
+      board.position("start"); // Reseta o tabuleiro
+    };
+    reader.readAsText(file);
+  };
+
   // Avançar para o próximo lance do PGN
   const nextMove = () => {
     if (currentMove < moves.length) {
       const move = moves[currentMove];
-      chess.move(move);
+      chess.move(move.san);
       board.position(chess.fen()); // Atualiza o tabuleiro
       setCurrentMove(currentMove + 1); // Avança para o próximo movimento
       updateStatus();
@@ -126,49 +175,38 @@ export default function ChessBoard() {
     }
   };
 
-  // Carrega o arquivo PGN
-  const handlePGNUpload = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const pgn = e.target.result;
-      chess.loadPgn(pgn); // Carrega o arquivo PGN no objeto chess.js
-      const history = chess.history({ verbose: true }); // Extrai a lista de movimentos
-      setMoves(history);
-    };
-    reader.readAsText(file);
-  };
-
-  // Detectar teclas de seta para avançar/retroceder nos movimentos
-  useEffect(() => {
-    const handleKeydown = (event) => {
-      if (event.key === "ArrowRight") {
-        nextMove(); // Avançar no PGN
-      } else if (event.key === "ArrowLeft") {
-        prevMove(); // Retroceder no PGN
-      }
-    };
-
-    window.addEventListener("keydown", handleKeydown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeydown);
-    };
-  }, [currentMove, moves]);
-
   return (
     <div>
-      <h1>Modo Análise</h1>
+      <h1>{gameMode === "multiplayer" ? "Multiplayer" : "Modo Análise"}</h1>
 
-      {/* Input para carregar o arquivo PGN */}
-      <input type="file" onChange={handlePGNUpload} accept=".pgn" />
+      {/* Seletor de modo */}
+      <div>
+        <button onClick={() => setGameMode("multiplayer")}>Multiplayer</button>
+        <button onClick={() => setGameMode("analysis")}>Modo Análise</button>
+      </div>
 
+      {gameMode === "analysis" && (
+        <>
+          {/* Input para carregar o arquivo PGN */}
+          <input type="file" onChange={handlePGNUpload} accept=".pgn" />
+
+          {/* Botões de navegação do PGN */}
+          <div className="button-container">
+            <button onClick={prevMove}>Lance Anterior</button>
+            <button onClick={nextMove}>Próximo Lance</button>
+          </div>
+        </>
+      )}
+
+      {/* Tabuleiro */}
       <div id="board1" style={{ width: "450px" }}></div>
 
-      <div className="button-container">
-        <button onClick={prevMove} className="green-button">Lance Anterior</button>
-        <button onClick={nextMove} className="green-button">Próximo Lance</button>
+      {/* Botões de controle da orientação */}
+      <div className="orientation-controls">
+        <button id="flipOrientationBtn">Inverter Orientação</button>
       </div>
+
+      
 
       {/* Exibe o status do jogo */}
       <div>
