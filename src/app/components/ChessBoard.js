@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Chess } from 'chess.js'; // Importa a biblioteca chess.js
+import { getAberturas, getChequeMates } from '../services/chessService'; // Importa os serviços do Supabase
 
 export default function ChessBoard() {
   const [chess, setChess] = useState(null); // Estado para o objeto chess.js
@@ -10,6 +11,8 @@ export default function ChessBoard() {
   const [board, setBoard] = useState(null); // Tabuleiro de xadrez
   const [status, setStatus] = useState(""); // Status do jogo
   const [gameMode, setGameMode] = useState("multiplayer"); // Alternar entre multiplayer e análise
+  const [aberturas, setAberturas] = useState([]); // Estado para armazenar as aberturas do Supabase
+  const [chequeMates, setChequeMates] = useState([]); // Estado para armazenar os chequemates do Supabase
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -82,6 +85,16 @@ export default function ChessBoard() {
         document.getElementById("flipOrientationBtn").addEventListener("click", () => {
           boardInstance.flip(); // Inverte a orientação
         });
+
+        // Buscar as aberturas e chequemates do Supabase
+        const fetchChessData = async () => {
+          const aberturasData = await getAberturas();
+          const chequeMatesData = await getChequeMates();
+          setAberturas(aberturasData);
+          setChequeMates(chequeMatesData);
+        };
+
+        fetchChessData(); // Chama a função para buscar os dados
       };
     }
   }, [gameMode]); // Recarregar o tabuleiro ao mudar o modo
@@ -175,6 +188,11 @@ export default function ChessBoard() {
     }
   };
 
+  // Função para definir uma posição específica via FEN
+  const goToFENPosition = (fen) => {
+    board.position(fen); // Define a posição usando a string FEN
+  };
+
   return (
     <div>
       <h1>{gameMode === "multiplayer" ? "Multiplayer" : "Modo Análise"}</h1>
@@ -195,6 +213,33 @@ export default function ChessBoard() {
             <button onClick={prevMove}>Lance Anterior</button>
             <button onClick={nextMove}>Próximo Lance</button>
           </div>
+
+          {/* Exibir Aberturas e Cheque Mates dinâmicos */}
+          <div className="opening-section">
+            <h3>Aberturas do Supabase</h3>
+            {aberturas.length === 0 ? (
+              <p>Carregando aberturas...</p>
+            ) : (
+              aberturas.map((abertura) => (
+                <button key={abertura.id} onClick={() => goToFENPosition(abertura.position)}>
+                  {abertura.name}
+                </button>
+              ))
+            )}
+          </div>
+
+          <div className="chequemate-section">
+            <h3>Cheque Mates do Supabase</h3>
+            {chequeMates.length === 0 ? (
+              <p>Carregando cheque mates...</p>
+            ) : (
+              chequeMates.map((mate) => (
+                <button key={mate.id} onClick={() => goToFENPosition(mate.position)}>
+                  {mate.name}
+                </button>
+              ))
+            )}
+          </div>
         </>
       )}
 
@@ -205,8 +250,6 @@ export default function ChessBoard() {
       <div className="orientation-controls">
         <button id="flipOrientationBtn">Inverter Orientação</button>
       </div>
-
-      
 
       {/* Exibe o status do jogo */}
       <div>

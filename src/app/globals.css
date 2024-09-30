@@ -101,3 +101,42 @@ body {
   width: 100%;
   max-width: 100%; /* Garantir que o footer não ultrapasse a largura da tela */
 }
+
+/* Estilos globais para botões */
+button {
+  background-color: #8b5e3c;
+  color: #f5e8d0; 
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px; /* Bordas arredondadas */
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+button:hover {
+  background-color: #734d31;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Sombra aumentada no hover */
+}
+
+button:active {
+  background-color: #5e3c20;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra reduzida ao clicar */
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(245, 232, 208, 0.5); /* Destaque claro para foco */
+}
+
+/* Estilo para containers de botões */
+.button-container, .fen-container, .opening-section, .chequemate-section {
+  margin-top: 20px;
+}
+
+.opening-section button, .chequemate-section button {
+  display: block;
+  margin-bottom: 10px; /* Margem entre os botões */
+  width: 100%; /* Largura total */
+}
