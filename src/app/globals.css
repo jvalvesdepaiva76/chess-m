@@ -52,27 +52,36 @@ body {
 
 .button-container {
   display: flex;
-  gap: 10px;
-  justify-content: center;
+  justify-content: center; /* Centraliza os botões */
+  gap: 15px; /* Espaçamento entre os botões */
+  margin-top: 20px; /* Adiciona espaço entre o tabuleiro e os botões */
 }
 
 .green-button {
-  background-color: #28a745;
-  color: white;
+  background-color: #8b5e3c; /* Cor marrom elegante */
+  color: #f5e8d0; /* Texto bege suave */
   padding: 10px 20px;
   border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  border-radius: 8px; /* Bordas arredondadas */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
   font-size: 1rem;
-  transition: background-color 0.3s;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .green-button:hover {
-  background-color: #218838;
+  background-color: #734d31; /* Um tom de marrom mais escuro no hover */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Aumentar a sombra ao passar o mouse */
 }
 
 .green-button:active {
-  background-color: #1e7e34;
+  background-color: #5e3c20; /* Marrom mais intenso ao clicar */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Reduzir a sombra ao clicar */
+}
+
+.green-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(245, 232, 208, 0.5); /* Sombra clara para foco */
 }
 
 .future-features {
@@ -83,11 +92,6 @@ body {
 .future-features h2 {
   font-size: 1.8rem;
   color: #f0f0f0;
-}
-
-.future-features ul {
-  list-style-type: none;
-  padding: 0;
 }
 
 .future-features li {
