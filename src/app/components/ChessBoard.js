@@ -88,10 +88,29 @@ export default function ChessBoard() {
 
         // Buscar as aberturas e chequemates do Supabase
         const fetchChessData = async () => {
-          const aberturasData = await getAberturas();
-          const chequeMatesData = await getChequeMates();
-          setAberturas(aberturasData);
-          setChequeMates(chequeMatesData);
+          try {
+            const aberturasData = await getAberturas();
+            const chequeMatesData = await getChequeMates();
+
+            // Logs para verificar os dados recebidos do Supabase
+            console.log("Aberturas recebidas:", aberturasData);
+            console.log("Cheque mates recebidos:", chequeMatesData);
+
+            if (aberturasData.length > 0) {
+              setAberturas(aberturasData); // Atualiza o estado de aberturas
+            } else {
+              console.warn("Nenhuma abertura encontrada na tabela.");
+            }
+
+            if (chequeMatesData.length > 0) {
+              setChequeMates(chequeMatesData); // Atualiza o estado de cheque mates
+            } else {
+              console.warn("Nenhum cheque mate encontrado na tabela.");
+            }
+
+          } catch (error) {
+            console.error("Erro ao buscar dados do Supabase:", error);
+          }
         };
 
         fetchChessData(); // Chama a função para buscar os dados

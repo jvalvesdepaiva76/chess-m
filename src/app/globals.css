@@ -4,7 +4,7 @@ body {
   box-sizing: border-box;
   font-family: Arial, sans-serif;
   height: 100vh;
-  overflow-x: hidden; /* Remover a barra de rolagem horizontal */
+  overflow-x: hidden;
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/chessboardjs/img/assets/chess.png');
   background-position: center;
   background-size: cover;
@@ -27,13 +27,13 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  max-width: 100%; /* Garantir que o container não ultrapasse a largura da tela */
+  max-width: 100%;
 }
 
 .header {
   text-align: center;
   margin-bottom: 40px;
-  max-width: 100%; /* Evitar quebra de layout no header */
+  max-width: 100%;
 }
 
 .chessboard-container {
@@ -43,37 +43,35 @@ body {
 
 .button-container {
   display: flex;
-  justify-content: center; /* Centraliza os botões */
-  gap: 15px; /* Espaçamento entre os botões */
-  margin-top: 20px; /* Adiciona espaço entre o tabuleiro e os botões */
-}
+  justify-content: center; 
+  gap: 15px;
+  margin-top: 20px;
 
 .green-button {
-  background-color: #8b5e3c; /* Cor marrom elegante */
-  color: #f5e8d0; /* Texto bege suave */
+  background-color: #8b5e3c;
+  color: #f5e8d0;
   padding: 10px 20px;
   border: none;
-  border-radius: 8px; /* Bordas arredondadas */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .green-button:hover {
-  background-color: #734d31; /* Um tom de marrom mais escuro no hover */
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Aumentar a sombra ao passar o mouse */
+  background-color: #734d31;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
 .green-button:active {
-  background-color: #5e3c20; /* Marrom mais intenso ao clicar */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Reduzir a sombra ao clicar */
+  background-color: #5e3c20;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .green-button:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(245, 232, 208, 0.5); /* Sombra clara para foco */
-}
+  box-shadow: 0 0 0 3px rgba(245, 232, 208, 0.5);
 
 .future-features {
   text-align: center;
@@ -92,51 +90,49 @@ body {
 }
 
 .footer {
-  background-color: #ddc7a1c7; /* Bege claro */
-  color: #333; /* Cor do texto */
+  background-color: #ddc7a1c7;
+  color: #333;
   padding: 10px;
   text-align: center;
   font-size: 0.9rem;
   position: relative;
   width: 100%;
-  max-width: 100%; /* Garantir que o footer não ultrapasse a largura da tela */
+  max-width: 100%;
 }
 
-/* Estilos globais para botões */
 button {
   background-color: #8b5e3c;
   color: #f5e8d0; 
   padding: 10px 20px;
   border: none;
-  border-radius: 8px; /* Bordas arredondadas */
+  border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 button:hover {
   background-color: #734d31;
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Sombra aumentada no hover */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
 button:active {
   background-color: #5e3c20;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra reduzida ao clicar */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 button:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(245, 232, 208, 0.5); /* Destaque claro para foco */
+  box-shadow: 0 0 0 3px rgba(245, 232, 208, 0.5);
 }
 
-/* Estilo para containers de botões */
 .button-container, .fen-container, .opening-section, .chequemate-section {
   margin-top: 20px;
 }
 
 .opening-section button, .chequemate-section button {
   display: block;
-  margin-bottom: 10px; /* Margem entre os botões */
-  width: 100%; /* Largura total */
+  margin-bottom: 10px;
+  width: 100%;
 }

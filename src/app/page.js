@@ -1,7 +1,5 @@
 "use client";
 
-// src/page.js
-
 import ChessBoard from './components/ChessBoard';
 import DailyPuzzle from './components/DailyPuzzle';
 

@@ -1,7 +1,5 @@
 "use client";
 
-// src/components/DailyPuzzle.js
-
 import React, { useEffect, useState } from 'react';
 
 export default function DailyPuzzle() {

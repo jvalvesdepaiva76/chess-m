@@ -1,4 +1,4 @@
-import { supabase } from './supabaseClient'; // O cliente Supabase que você já configurou
+import { supabase } from './supabaseClient';
 
 // Busca aberturas no banco de dados
 export const getAberturas = async () => {

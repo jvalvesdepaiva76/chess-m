@@ -1,4 +1,4 @@
-import './globals.css'; // Importa os estilos globais
+import './globals.css';
 
 export const metadata = {
   title: 'Chess Master',
